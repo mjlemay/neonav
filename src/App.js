@@ -1,26 +1,45 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import useGeolocation from 'react-hook-geolocation';
+import { 
+  ThemeProvider,
+  createTheme,
+  SoundsProvider,
+  createSounds,
+  Arwes,
+  Content,
+  Project 
+} from 'arwes';
 
 function App() {
+  const location = useGeolocation();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={createTheme()}>
+      <Arwes animate>
+        <SoundsProvider sounds={createSounds()}>
+          <Content style={{ margin: 20 }}>
+            <Project
+                    animate
+                    header='Geolocation Tests!'
+                >
+                    {anim => (
+                      <>
+                        <p>accuracy: {location.accuracy || 'null'}</p>
+                        <p>altitude: {location.altitude || 'null'}</p>
+                        <p>altitudeAccuracy: {location.altitudeAccuracy || 'null'}</p>
+                        <p>heading: {location.heading || 'null'}</p>
+                        <p>latitude: {location.latitude || 'null'}</p>
+                        <p>longitude: {location.longitude || 'null'}</p>
+                        <p>speed: {location.speed || 'null'}</p>
+                        <p>timestamp: {location.timestamp || 'null'}</p>
+                        <p>error: {location.error || 'null'}</p>
+                      </>
+                    )}
+              </Project>
+            </Content>
+        </SoundsProvider>
+      </Arwes>
+    </ThemeProvider>
   );
 }
-
 export default App;
